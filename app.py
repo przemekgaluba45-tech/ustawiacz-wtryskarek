@@ -14,8 +14,16 @@ defects_info = {
     "Ślady spalenia (Diesel)": ["Zmniejsz prędkość wtrysku", "Wyczyść odpowietrzenia", "Zmniejsz dekompresję"],
     "Srebrzenie (Silver)": ["Sprawdź suszenie!", "Obniż temp. stopu", "Zmniejsz obroty ślimaka"],
     "Linie łączenia": ["Podnieś temp. stopu i formy", "Zwiększ prędkość wtrysku"],
-    "Deformacje": ["Wydłuż chłodzenie", "Zrównoważ temp. połówek formy", "Zmniejsz docisk"]
+    "Deformacje": ["Wydłuż chłodzenie", "Zrównoważ temp. połówek formy", "Zmniejsz docisk"],
+    "Rozwarstwienia": ["Sprawdź czystość/zawilgocenie", "Podnieś temp. stopu", "Zmniejsz prędkość wtrysku"],
+    "Jetting (Zmatowienia)": ["Zmniejsz prędkość wtrysku na starcie", "Podnieś temp. stopu", "Zwiększ temp. formy"],
+    "Pęcherze powietrza": ["Zwiększ ciśnienie i czas docisku", "Obniż temp. stopu", "Zmniejsz dekompresję"],
+    "Smugi barwnika": ["Zwiększ ciśnienie spiętrzenia", "Zwiększ obroty ślimaka", "Podnieś temp. w strefie dozowania"],
+    "Zimne wlewy": ["Podnieś temp. dyszy", "Zwiększ odskok (dekompresję)", "Sprawdź grzałkę dyszy"],
+    "Łuszczenie powierzchni": ["Zwiększ temp. stopu", "Wysusz materiał", "Zmniejsz ilość regranulatu"],
+    "Efekt gramofonowy": ["Zwiększ prędkość wtrysku", "Zwiększ temp. stopu", "Podnieś temp. formy"]
 }
+
 
 materials_data = {
     "Materiał": ["PP", "PE-HD", "ABS", "PA6", "PC", "POM", "PS", "PET"],
@@ -50,4 +58,5 @@ with tab3:
     
     force = (area * pressure) / 10
     st.metric("Sugerowana Siła Zwarcia", f"{force} kN")
+
     st.caption("Wzór: F = (A * p) / 10")
