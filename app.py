@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # Konfiguracja strony (żeby dobrze wyglądała na telefonie)
-st.set_page_config(page_title="Setter Pro", page_icon="🏗️")
+st.set_page_config(page_title="Setter Pro", page_icon="⚙️")
 
 st.title("🏗️ Setter Pro - Asystent Ustawiacza")
 
@@ -86,3 +86,4 @@ with tab3:
         st.write(f"📊 **Szczegóły:**")
         st.write(f"- Liczba wtrysków: {int(total_shots)}")
         st.write(f"- Detale na godzinę (100%): {int((3600 / cycle_time) * cavities)}")
+
