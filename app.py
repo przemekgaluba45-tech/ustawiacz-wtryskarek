@@ -55,7 +55,8 @@ with tab3:
     st.subheader("🧮 Obliczenia Techniczne")
     
     # Wybór rodzaju kalkulatora
-    calc_type = st.radio("Wybierz kalkulator:", ["Siła Zwarcia", "Wydajność Produkcji"])
+    calc_type = st.selectbox("Wybierz kalkulator:", 
+                             ["Siła Zwarcia", "Wydajność Produkcji", "Zapotrzebowanie Materiału"])
     
     if calc_type == "Siła Zwarcia":
         area = st.number_input("Powierzchnia rzutu detali (cm²)", min_value=1.0, value=100.0)
@@ -66,25 +67,43 @@ with tab3:
         
     elif calc_type == "Wydajność Produkcji":
         st.info("Oblicz, ile detali wyprodukujesz w określonym czasie.")
-        
         col1, col2 = st.columns(2)
         with col1:
             cycle_time = st.number_input("Czas cyklu (sekundy)", min_value=0.1, value=20.0, step=0.1)
             cavities = st.number_input("Liczba gniazd w formie", min_value=1, value=1, step=1)
-        
         with col2:
-            hours = st.selectbox("Czas pracy (godziny)", [1, 7.5, 8, 12, 24], index=2)
+            hours = st.selectbox("Czas pracy (godziny)", [1, 7.5, 8, 12, 24, 168], index=2)
             efficiency = st.slider("Wydajność maszyny (%)", 50, 100, 95)
 
-        # Obliczenia: (3600s / czas cyklu) * liczba gniazd * godziny * wydajność
         total_shots = (3600 / cycle_time) * hours
         total_parts = total_shots * cavities * (efficiency / 100)
+        st.metric("Planowana liczba detali (Szt.)", f"{int(total_parts)}")
+
+    elif calc_type == "Zapotrzebowanie Materiału":
+        st.info("Oblicz ilość materiału potrzebną do realizacji zlecenia.")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            part_weight = st.number_input("Waga 1 detalu (gramy)", min_value=0.01, value=10.0, step=0.1)
+            runner_weight = st.number_input("Waga wlewka (gramy)", min_value=0.0, value=2.0, step=0.1)
+            cavities_mat = st.number_input("Liczba gniazd ", min_value=1, value=1, step=1)
+        
+        with col2:
+            order_qty = st.number_input("Ilość do wyprodukowania (Szt.)", min_value=1, value=1000, step=100)
+            scrap_rate = st.slider("Zakładany odpad (%)", 0, 20, 2)
+
+        # Obliczenia:
+        # Waga jednego wtrysku (detale + wlewek)
+        shot_weight = (part_weight * cavities_mat) + runner_weight
+        # Całkowita waga netto dla zlecenia w gramach
+        total_weight_g = (order_qty / cavities_mat) * shot_weight
+        # Uwzględnienie odpadu i zamiana na kg
+        total_weight_kg = (total_weight_g / 1000) * (1 + scrap_rate / 100)
         
         st.divider()
-        st.metric("Planowana liczba detali (Szt.)", f"{int(total_parts)}")
+        st.metric("Potrzebny materiał (kg)", f"{round(total_weight_kg, 2)} kg")
         
-        st.write(f"📊 **Szczegóły:**")
-        st.write(f"- Liczba wtrysków: {int(total_shots)}")
-        st.write(f"- Detale na godzinę (100%): {int((3600 / cycle_time) * cavities)}")
-
-
+        st.write("📊 **Rozbicie wagowe:**")
+        st.write(f"- Waga wtrysku: {round(shot_weight, 2)} g")
+        st.write(f"- Waga netto zlecenia (bez odpadu): {round(total_weight_g / 1000, 2)} kg")
+        st.write(f"- Dodatek na odpad: {round((total_weight_g / 1000) * (scrap_rate / 100), 2)} kg")
