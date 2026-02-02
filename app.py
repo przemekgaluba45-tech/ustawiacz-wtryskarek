@@ -52,11 +52,37 @@ with tab2:
 
 # --- TAB 3: KALKULATOR ---
 with tab3:
-    st.subheader("Siła Zwarcia (szacunkowa)")
-    area = st.number_input("Powierzchnia rzutu (cm²)", min_value=1.0, value=100.0)
-    pressure = st.number_input("Ciśnienie w gnieździe (bar)", min_value=1, value=300)
+    st.subheader("🧮 Obliczenia Techniczne")
     
-    force = (area * pressure) / 10
-    st.metric("Sugerowana Siła Zwarcia", f"{force} kN")
+    # Wybór rodzaju kalkulatora
+    calc_type = st.radio("Wybierz kalkulator:", ["Siła Zwarcia", "Wydajność Produkcji"])
+    
+    if calc_type == "Siła Zwarcia":
+        area = st.number_input("Powierzchnia rzutu detali (cm²)", min_value=1.0, value=100.0)
+        pressure = st.number_input("Ciśnienie w gnieździe (bar)", min_value=1, value=300)
+        force = (area * pressure) / 10
+        st.metric("Sugerowana Siła Zwarcia", f"{force} kN")
+        st.caption("Wzór: F = (A * p) / 10")
+        
+    elif calc_type == "Wydajność Produkcji":
+        st.info("Oblicz, ile detali wyprodukujesz w określonym czasie.")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            cycle_time = st.number_input("Czas cyklu (sekundy)", min_value=0.1, value=20.0, step=0.1)
+            cavities = st.number_input("Liczba gniazd w formie", min_value=1, value=1, step=1)
+        
+        with col2:
+            hours = st.selectbox("Czas pracy (godziny)", [1, 7.5, 8, 12, 24], index=2)
+            efficiency = st.slider("Wydajność maszyny (%)", 50, 100, 95)
 
-    st.caption("Wzór: F = (A * p) / 10")
+        # Obliczenia: (3600s / czas cyklu) * liczba gniazd * godziny * wydajność
+        total_shots = (3600 / cycle_time) * hours
+        total_parts = total_shots * cavities * (efficiency / 100)
+        
+        st.divider()
+        st.metric("Planowana liczba detali (Szt.)", f"{int(total_parts)}")
+        
+        st.write(f"📊 **Szczegóły:**")
+        st.write(f"- Liczba wtrysków: {int(total_shots)}")
+        st.write(f"- Detale na godzinę (100%): {int((3600 / cycle_time) * cavities)}")
