@@ -140,31 +140,36 @@ with tab4:
     opt_choice = st.selectbox("Wybierz obszar optymalizacji:", 
                               ["Skracanie Czasu Cyklu", "Stabilizacja Wagi Wtrysku", "Oszczędność Energii"])
     
-    if opt_choice == "Skracanie Czasu Cyklu":
+   if opt_choice == "Skracanie Czasu Cyklu":
         st.success("Cel: Zwiększenie wydajności bez utraty jakości.")
+        
+        st.markdown("### ⚖️ Optymalizacja czasu docisku (Gate Freeze Study)")
+        st.write("Wpisuj wagę detalu wraz z wlewkiem dla coraz dłuższego czasu docisku:")
+        
+        # Tworzenie tabeli do wpisywania danych
+        data_weight = pd.DataFrame({
+            "Czas docisku [s]": [2, 4, 6, 8, 10, 12],
+            "Waga wtrysku [g]": [0.0] * 6
+        })
+        
+        # Interaktywna tabela
+        edited_df = st.data_editor(data_weight, num_rows="dynamic")
+        
+        # Prosta analiza
+        max_w = edited_df["Waga wtrysku [g]"].max()
+        if max_w > 0:
+            # Szukamy pierwszego czasu, przy którym waga przestała rosnąć
+            stable_time = edited_df[edited_df["Waga wtrysku [g]"] == max_w]["Czas docisku [s]"].min()
+            st.info(f"💡 **Wniosek:** Przewężka zastygła prawdopodobnie przy **{stable_time} s**. Ustaw czas docisku na **{stable_time + 0.5} s** (margines bezpieczeństwa).")
+
+        st.divider()
         st.info("""
-        * **Czas chłodzenia:** Obniżaj o 0.5s, aż detale zaczną się deformować, wtedy wróć o 1s.
+        **Pozostałe rady:**
+        * **Czas chłodzenia:** Obniżaj o 0.5s, aż detale zaczną się deformować.
         * **Ruchy równoległe:** Jeśli maszyna pozwala, otwieraj formę podczas dozowania.
-        * **Prędkość otwierania:** Zwiększ prędkość otwierania formy w środkowej fazie ruchu.
-        * **Czas docisku:** Wykonaj test ważenia detali – jeśli po skróceniu czasu docisku waga detalu nie spada, oznacza to, że wlewek zastygł i dalszy docisk to strata czasu.
+        * **Prędkość otwierania:** Zwiększ prędkość w środkowej fazie ruchu.
         """)
 
-    elif opt_choice == "Stabilizacja Wagi Wtrysku":
-        st.warning("Cel: Wyeliminowanie wahań wymiarowych i braków.")
-        st.write("""
-        * **Poduszka (Cushion):** Musi być stabilna (np. 3-5 mm). Jeśli skacze, sprawdź zawór zwrotny.
-        * **Dekompresja:** Ustaw minimalną możliwą, aby zapobiec wyciekom, ale nie wprowadzaj powietrza do układu.
-        * **Temperatura oleju:** Stabilna temp. oleju (ok. 40°C) to stabilna praca hydrauliki.
-        * **Punkt przełączenia:** Ustaw tak, aby wypełnić 95-98% objętości detalu przed przejściem na docisk.
-        """)
-
-    elif opt_choice == "Oszczędność Energii":
-        st.info("Cel: Obniżenie kosztów produkcji.")
-        st.write("""
-        * **Izolacja cylindra:** Zastosuj koce termoizolacyjne na grzałki (oszczędność do 30% energii grzania).
-        * **Profil temperatur:** Obniż temperatury w tylnych strefach cylindra, jeśli to możliwe.
-        * **Siła zwarcia:** Nie używaj maksymalnej siły zwarcia, jeśli nie jest potrzebna – oszczędzasz pompę i formę.
-        """)
 
 
 
