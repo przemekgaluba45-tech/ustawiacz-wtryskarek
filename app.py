@@ -140,7 +140,7 @@ with tab4:
     opt_choice = st.selectbox("Wybierz obszar optymalizacji:", 
                               ["Skracanie Czasu Cyklu", "Stabilizacja Wagi Wtrysku", "Oszczędność Energii"])
     
-   if opt_choice == "Skracanie Czasu Cyklu":
+    if opt_choice == "Skracanie Czasu Cyklu":
         st.success("Cel: Zwiększenie wydajności bez utraty jakości.")
         
         st.markdown("### ⚖️ Optymalizacja czasu docisku (Gate Freeze Study)")
@@ -148,12 +148,12 @@ with tab4:
         
         # Tworzenie tabeli do wpisywania danych
         data_weight = pd.DataFrame({
-            "Czas docisku [s]": [2, 4, 6, 8, 10, 12],
+            "Czas docisku [s]": [2.0, 4.0, 6.0, 8.0, 10.0, 12.0],
             "Waga wtrysku [g]": [0.0] * 6
         })
         
         # Interaktywna tabela
-        edited_df = st.data_editor(data_weight, num_rows="dynamic")
+        edited_df = st.data_editor(data_weight, num_rows="dynamic", key="gate_freeze_editor")
         
         # Prosta analiza
         max_w = edited_df["Waga wtrysku [g]"].max()
@@ -170,10 +170,19 @@ with tab4:
         * **Prędkość otwierania:** Zwiększ prędkość w środkowej fazie ruchu.
         """)
 
+    elif opt_choice == "Stabilizacja Wagi Wtrysku":
+        st.warning("Cel: Wyeliminowanie wahań wymiarowych.")
+        st.write("""
+        * **Poduszka (Cushion):** Musi być stabilna (np. 3-5 mm).
+        * **Dekompresja:** Ustaw minimalną możliwą.
+        * **Punkt przełączenia:** Ustaw tak, aby wypełnić 95-98% objętości detalu.
+        """)
 
-
-
-
-
+    elif opt_choice == "Oszczędność Energii":
+        st.info("Cel: Obniżenie kosztów.")
+        st.write("""
+        * **Izolacja cylindra:** Zastosuj koce termoizolacyjne.
+        * **Siła zwarcia:** Nie używaj maksymalnej, jeśli nie jest potrzebna.
+        """)
 
 
