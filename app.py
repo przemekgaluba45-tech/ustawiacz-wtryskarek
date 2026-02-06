@@ -1,16 +1,28 @@
 import streamlit as st
 import pandas as pd
-# Poprawka skrolowania dla iPhone
+# Ostateczna poprawka wyświetlania dla iPhone
 st.markdown(
     """
     <style>
+    /* 1. Rozszerzenie głównego kontenera */
     .main .block-container {
         max-width: 100%;
         padding-top: 1rem;
-        padding-bottom: 10rem;
+        /* Dodajemy ogromny margines na dole - 80% wysokości ekranu */
+        padding-bottom: 80vh !important; 
     }
+    
+    /* 2. Fix dla przewijania na iOS */
     html, body, [data-testid="stAppViewContainer"] {
-        overflow: auto;
+        height: auto !important;
+        min-height: 180vh !important; /* Strona będzie prawie dwa razy dłuższa niż ekran */
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch; /* Płynne przewijanie palcem */
+    }
+
+    /* 3. Ukrycie zbędnych elementów blokujących miejsce */
+    [data-testid="stHeader"], footer {
+        display: none !important;
     }
     </style>
     """,
@@ -122,6 +134,7 @@ with tab3:
         st.write(f"- Waga wtrysku: {round(shot_weight, 2)} g")
         st.write(f"- Waga netto zlecenia (bez odpadu): {round(total_weight_g / 1000, 2)} kg")
         st.write(f"- Dodatek na odpad: {round((total_weight_g / 1000) * (scrap_rate / 100), 2)} kg")
+
 
 
 
