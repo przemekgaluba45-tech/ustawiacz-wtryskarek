@@ -134,6 +134,38 @@ with tab3:
         st.write(f"- Waga wtrysku: {round(shot_weight, 2)} g")
         st.write(f"- Waga netto zlecenia (bez odpadu): {round(total_weight_g / 1000, 2)} kg")
         st.write(f"- Dodatek na odpad: {round((total_weight_g / 1000) * (scrap_rate / 100), 2)} kg")
+# --- TAB 4: OPTYMALIZACJA ---
+with tab4:
+    st.subheader("🚀 Strategie Optymalizacji Procesu")
+    
+    opt_choice = st.selectbox("Wybierz obszar optymalizacji:", 
+                              ["Skracanie Czasu Cyklu", "Stabilizacja Wagi Wtrysku", "Oszczędność Energii"])
+    
+    if opt_choice == "Skracanie Czasu Cyklu":
+        st.success("Cel: Zwiększenie wydajności bez utraty jakości.")
+        st.info("""
+        * **Czas chłodzenia:** Obniżaj o 0.5s, aż detale zaczną się deformować, wtedy wróć o 1s.
+        * **Ruchy równoległe:** Jeśli maszyna pozwala, otwieraj formę podczas dozowania.
+        * **Prędkość otwierania:** Zwiększ prędkość otwierania formy w środkowej fazie ruchu.
+        * **Czas docisku:** Wykonaj test ważenia detali – jeśli po skróceniu czasu docisku waga detalu nie spada, oznacza to, że wlewek zastygł i dalszy docisk to strata czasu.
+        """)
+
+    elif opt_choice == "Stabilizacja Wagi Wtrysku":
+        st.warning("Cel: Wyeliminowanie wahań wymiarowych i braków.")
+        st.write("""
+        * **Poduszka (Cushion):** Musi być stabilna (np. 3-5 mm). Jeśli skacze, sprawdź zawór zwrotny.
+        * **Dekompresja:** Ustaw minimalną możliwą, aby zapobiec wyciekom, ale nie wprowadzaj powietrza do układu.
+        * **Temperatura oleju:** Stabilna temp. oleju (ok. 40°C) to stabilna praca hydrauliki.
+        * **Punkt przełączenia:** Ustaw tak, aby wypełnić 95-98% objętości detalu przed przejściem na docisk.
+        """)
+
+    elif opt_choice == "Oszczędność Energii":
+        st.info("Cel: Obniżenie kosztów produkcji.")
+        st.write("""
+        * **Izolacja cylindra:** Zastosuj koce termoizolacyjne na grzałki (oszczędność do 30% energii grzania).
+        * **Profil temperatur:** Obniż temperatury w tylnych strefach cylindra, jeśli to możliwe.
+        * **Siła zwarcia:** Nie używaj maksymalnej siły zwarcia, jeśli nie jest potrzebna – oszczędzasz pompę i formę.
+        """)
 
 
 
