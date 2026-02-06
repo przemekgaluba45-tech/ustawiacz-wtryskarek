@@ -60,8 +60,7 @@ materials_data = {
 }
 
 # --- NAWIGACJA ---
-tab1, tab2, tab3 = st.tabs(["🔍 Diagnostyka", "🧪 Materiały", "🧮 Kalkulator"])
-
+tab1, tab2, tab3, tab4 = st.tabs(["Diagnostyka", "Materiały", "Kalkulatory", "Optymalizacja"])
 # --- TAB 1: DIAGNOSTYKA ---
 with tab1:
     st.subheader("Wybierz defekt z listy:")
@@ -166,6 +165,7 @@ with tab4:
         * **Profil temperatur:** Obniż temperatury w tylnych strefach cylindra, jeśli to możliwe.
         * **Siła zwarcia:** Nie używaj maksymalnej siły zwarcia, jeśli nie jest potrzebna – oszczędzasz pompę i formę.
         """)
+
 
 
 
