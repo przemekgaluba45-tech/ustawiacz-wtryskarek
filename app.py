@@ -1,4 +1,20 @@
 import streamlit as st
+# Poprawka skrolowania dla iPhone
+st.markdown(
+    """
+    <style>
+    .main .block-container {
+        max-width: 100%;
+        padding-top: 1rem;
+        padding-bottom: 10rem; /* Dodatkowy margines na dole, żeby klawiatura nie zasłaniała */
+    }
+    html, body, [data-testid="stAppViewContainer"] {
+        overflow: auto;
+    }
+    </style>
+    """,
+    unsafe_allow_unsafe_allow_html=True
+)
 import pandas as pd
 
 # Konfiguracja strony (żeby dobrze wyglądała na telefonie)
@@ -107,3 +123,4 @@ with tab3:
         st.write(f"- Waga wtrysku: {round(shot_weight, 2)} g")
         st.write(f"- Waga netto zlecenia (bez odpadu): {round(total_weight_g / 1000, 2)} kg")
         st.write(f"- Dodatek na odpad: {round((total_weight_g / 1000) * (scrap_rate / 100), 2)} kg")
+
