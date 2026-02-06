@@ -31,7 +31,7 @@ st.markdown(
 # Konfiguracja strony (żeby dobrze wyglądała na telefonie)
 st.set_page_config(page_title="Setter Pro", page_icon="⚙️")
 
-st.title("⚙️ Setter Pro - Asystent Ustawiacza")
+st.title("⚙️ Asystent Ustawiacza")
 
 # --- BAZA DANYCH ---
 defects_info = {
@@ -165,6 +165,7 @@ with tab4:
         * **Profil temperatur:** Obniż temperatury w tylnych strefach cylindra, jeśli to możliwe.
         * **Siła zwarcia:** Nie używaj maksymalnej siły zwarcia, jeśli nie jest potrzebna – oszczędzasz pompę i formę.
         """)
+
 
 
 
