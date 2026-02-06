@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 # Poprawka skrolowania dla iPhone
 st.markdown(
     """
@@ -15,7 +16,6 @@ st.markdown(
     """,
     unsafe_allow_unsafe_allow_html=True
 )
-import pandas as pd
 
 # Konfiguracja strony (żeby dobrze wyglądała na telefonie)
 st.set_page_config(page_title="Setter Pro", page_icon="⚙️")
@@ -123,4 +123,5 @@ with tab3:
         st.write(f"- Waga wtrysku: {round(shot_weight, 2)} g")
         st.write(f"- Waga netto zlecenia (bez odpadu): {round(total_weight_g / 1000, 2)} kg")
         st.write(f"- Dodatek na odpad: {round((total_weight_g / 1000) * (scrap_rate / 100), 2)} kg")
+
 
